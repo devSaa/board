@@ -9,8 +9,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js', 'build') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -21,7 +19,7 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+    <nav class="navbar navbar-expand-md navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
@@ -77,9 +75,28 @@
         </div>
     </nav>
 
-    <main class="py-4">
-        @yield('content')
+    <div class="container py-3">
+        @section('breadcrumbs', Breadcrumbs::render())
+        @yield('breadcrumbs')
+    </div>
+
+    <main class="app-content py-3">
+        <div class="container">
+            @yield('content')
+        </div>
     </main>
+
+    <footer>
+        <div class="container">
+            <div class="border-top pt-3">
+                <p>{{ date("Y") }} - board</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ mix('js/app.js', 'build') }}" defer></script>
+
 </div>
 </body>
 </html>
