@@ -1,51 +1,66 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+@section('title', 'AdminLTE')
+@section('breadcrumbs', Breadcrumbs::render())
+@section('content_header')
+    <h1>Show user</h1>
+    @yield('breadcrumbs')
+@stop
 
 @section('content')
-    @include('admin.users._nav')
+    <div class="box">
+        <div class="box-header with-border">
+            <table>
+                <tr>
+                    <td>
+                        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary margin">Edit</a>
+                    </td>
+                    @if ($user->isWait())
+                        <td>
+                            <form method="POST" action="{{ route('admin.users.verify', $user) }}" class="margin">
+                                @csrf
+                                <button class="btn btn-success">Verify</button>
+                            </form>
+                        </td>
+                    @endif
+                    <td>
+                        <form method="POST" action="{{ route('admin.users.destroy', $user) }}" class="margin">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-    <div class="d-flex flex-row mb-3">
-        <a href="{{ route('admin.users.edit', $user) }}" class="btn btn-primary mr-1">Edit</a>
-
-        @if ($user->isWait())
-            <form method="POST" action="{{ route('admin.users.verify', $user) }}" class="mr-1">
-                @csrf
-                <button class="btn btn-success">Verify</button>
-            </form>
-        @endif
-
-        <form method="POST" action="{{ route('admin.users.destroy', $user) }}" class="mr-1">
-            @csrf
-            @method('DELETE')
-            <button class="btn btn-danger">Delete</button>
-        </form>
+        <div class="box-body">
+            <table class="table table-bordered table-striped">
+                <tbody>
+                <tr>
+                    <th>ID</th>
+                    <td>{{ $user->id }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ $user->name }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ $user->email }}</td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>
+                        @if ($user->isWait())
+                            <span class="badge bg-yellow">Waiting</span>
+                        @endif
+                        @if ($user->isActive())
+                            <span class="badge bg-green">Active</span>
+                        @endif
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <table class="table table-bordered table-striped">
-        <tbody>
-        <tr>
-            <th>ID</th>
-            <td>{{ $user->id }}</td>
-        </tr>
-        <tr>
-            <th>Name</th>
-            <td>{{ $user->name }}</td>
-        </tr>
-        <tr>
-            <th>Email</th>
-            <td>{{ $user->email }}</td>
-        </tr>
-        <tr>
-            <th>Status</th>
-            <td>
-                @if ($user->isWait())
-                    <span class="badge badge-secondary">Waiting</span>
-                @endif
-                @if ($user->isActive())
-                    <span class="badge badge-primary">Active</span>
-                @endif
-            </td>
-        </tr>
-        <tbody>
-        </tbody>
-    </table>
 @endsection
