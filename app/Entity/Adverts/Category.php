@@ -4,7 +4,6 @@ namespace App\Entity\Adverts;
 
 use Illuminate\Database\Eloquent\Model;
 use Kalnoy\Nestedset\NodeTrait;
-use PHPUnit\Framework\Constraint\Attribute;
 
 /**
  * @property int $id
