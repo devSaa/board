@@ -85,7 +85,7 @@ return [
     |
     */
 
-    'dashboard_url' => 'admin/',
+    'dashboard_url' => 'admin/home',
 
     'logout_url' => '/logout',
 
@@ -116,7 +116,7 @@ return [
 //        ],
         [
             'text'        => 'Dashboard',
-            'url'         => 'admin/#',
+            'url'         => 'admin/home',
             'icon'        => 'file'
         ],
         [
@@ -128,6 +128,11 @@ return [
             'text'        => 'Regions',
             'url'         => 'admin/regions',
             'icon'        => 'map'
+        ],
+        [
+            'text'        => 'Category',
+            'url'         => 'admin/adverts/categories',
+            'icon'        => 'bars'
         ],
         'ACCOUNT SETTINGS',
         [

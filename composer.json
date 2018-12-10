@@ -12,6 +12,7 @@
         "davejamesmiller/laravel-breadcrumbs": "^5.2",
         "fideloper/proxy": "^4.0",
         "jeroennoten/laravel-adminlte": "^1.24",
+        "kalnoy/nestedset": "^4.3",
         "laracasts/flash": "^3.0",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
