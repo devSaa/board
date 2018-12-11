@@ -60,6 +60,33 @@ Breadcrumbs::register('admin.users.edit', function (Crumbs $crumbs, User $user) 
     $crumbs->push('Edit', route('admin.users.edit', $user));
 });
 
+// Cabinet
+Breadcrumbs::register('cabinet.home', function (Crumbs $crumbs) {
+    $crumbs->parent('home');
+    $crumbs->push('Cabinet', route('cabinet.home'));
+});
+
+Breadcrumbs::register('cabinet.profile.home', function (Crumbs $crumbs) {
+    $crumbs->parent('cabinet.home');
+    $crumbs->push('Profile', route('cabinet.profile.home'));
+});
+
+Breadcrumbs::register('cabinet.profile.edit', function (Crumbs $crumbs) {
+    $crumbs->parent('cabinet.profile.home');
+    $crumbs->push('Edit', route('cabinet.profile.edit'));
+});
+
+Breadcrumbs::register('cabinet.profile.phone', function (Crumbs $crumbs) {
+    $crumbs->parent('cabinet.profile.home');
+    $crumbs->push('Phone', route('cabinet.profile.phone'));
+});
+
+// Cabinet Adverts
+Breadcrumbs::register('cabinet.adverts.index', function (Crumbs $crumbs) {
+    $crumbs->parent('cabinet.home');
+    $crumbs->push('Adverts', route('cabinet.adverts.index'));
+});
+
 // Regions
 Breadcrumbs::register('admin.regions.index', function (Crumbs $crumbs) {
     $crumbs->parent('admin.home');
