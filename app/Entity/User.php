@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Adverts\Advert\Advert;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -27,19 +28,15 @@ class User extends Authenticatable
     use Notifiable;
     public const STATUS_WAIT = 'wait';
     public const STATUS_ACTIVE = 'active';
-
     public const ROLE_USER = 'user';
     public const ROLE_MODERATOR = 'moderator';
     public const ROLE_ADMIN = 'admin';
-
     protected $fillable = [
         'name', 'last_name', 'email', 'phone', 'password', 'verify_token', 'status', 'role',
     ];
-
     protected $hidden = [
         'password', 'remember_token',
     ];
-
     protected $casts = [
         'phone_verified' => 'boolean',
         'phone_verify_token_expire' => 'datetime',
@@ -101,7 +98,7 @@ class User extends Authenticatable
 
     public function changeRole($role): void
     {
-        if (!\in_array($role, [self::ROLE_USER, self::ROLE_ADMIN], true)) {
+        if (!array_key_exists($role, self::rolesList())) {
             throw new \InvalidArgumentException('Undefined role "' . $role . '"');
         }
         if ($this->role === $role) {
@@ -163,14 +160,32 @@ class User extends Authenticatable
         $this->saveOrFail();
     }
 
-    public function isAdmin(): bool
+    public function addToFavorites($id): void
     {
-        return $this->role === self::ROLE_ADMIN;
+        if ($this->hasInFavorites($id)) {
+            throw new \DomainException('This advert is already added to favorites.');
+        }
+        $this->favorites()->attach($id);
+    }
+
+    public function removeFromFavorites($id): void
+    {
+        $this->favorites()->detach($id);
+    }
+
+    public function hasInFavorites($id): bool
+    {
+        return $this->favorites()->where('id', $id)->exists();
     }
 
     public function isModerator(): bool
     {
         return $this->role === self::ROLE_MODERATOR;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
     }
 
     public function isPhoneVerified(): bool
@@ -186,5 +201,10 @@ class User extends Authenticatable
     public function hasFilledProfile(): bool
     {
         return !empty($this->name) && !empty($this->last_name) && $this->isPhoneVerified();
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Advert::class, 'advert_favorites', 'user_id', 'advert_id');
     }
 }

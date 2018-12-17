@@ -86,11 +86,11 @@ class AdvertController extends Controller
 
     public function photos(PhotosRequest $request, Advert $advert)
     {
-        try {
-            $this->service->addPhotos($advert->id, $request);
-        } catch (\DomainException $e) {
-            return back()->with('error', $e->getMessage());
-        }
+//        try {
+//            $this->service->addPhotos($advert->id, $request);
+//        } catch (\DomainException $e) {
+//            return back()->with('error', $e->getMessage());
+//        }
         return redirect()->route('adverts.show', $advert);
     }
 

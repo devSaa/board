@@ -110,37 +110,6 @@
 
                 <div id="map" style="width: 100%; height: 250px"></div>
 
-                <script src="//api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru-RU"
-                        type="text/javascript"></script>
-
-                <script type='text/javascript'>
-                    ymaps.ready(init);
-
-                    function init() {
-                        var geocoder = new ymaps.geocode(
-                            '{{ $advert->address }}',
-                            {results: 1}
-                        );
-                        geocoder.then(
-                            function (res) {
-                                var coord = res.geoObjects.get(0).geometry.getCoordinates();
-                                var map = new ymaps.Map('map', {
-                                    center: coord,
-                                    zoom: 7,
-                                    behaviors: ['default', 'scrollZoom'],
-                                    controls: ['mapTools']
-                                });
-                                map.geoObjects.add(res.geoObjects.get(0));
-                                map.zoomRange.get(coord).then(function (range) {
-                                    map.setCenter(coord, range[1] - 1)
-                                });
-                                map.controls.add('mapTools')
-                                    .add('zoomControl')
-                                    .add('typeSelector');
-                            }
-                        );
-                    }
-                </script>
             </div>
 
             <p style="margin-bottom: 20px">Seller: {{ $advert->user->name }}</p>
@@ -150,8 +119,7 @@
                 <span class="btn btn-primary phone-button mr-1"
                       data-source="{{ route('adverts.phone', $advert) }}"><span class="fa fa-phone"></span> <span
                             class="number">Show Phone Number</span></span>
-{{--                @if ($user && $user->hasInFavorites($advert->id))--}}
-                @if ($user)
+                @if ($user && $user->hasInFavorites($advert->id))
                     <form method="POST" action="{{ route('adverts.favorites', $advert) }}" class="mr-1">
                         @csrf
                         @method('DELETE')
