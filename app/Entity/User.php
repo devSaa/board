@@ -27,19 +27,33 @@ class User extends Authenticatable
     use Notifiable;
     public const STATUS_WAIT = 'wait';
     public const STATUS_ACTIVE = 'active';
+
     public const ROLE_USER = 'user';
+    public const ROLE_MODERATOR = 'moderator';
     public const ROLE_ADMIN = 'admin';
+
     protected $fillable = [
         'name', 'last_name', 'email', 'phone', 'password', 'verify_token', 'status', 'role',
     ];
+
     protected $hidden = [
         'password', 'remember_token',
     ];
+
     protected $casts = [
         'phone_verified' => 'boolean',
         'phone_verify_token_expire' => 'datetime',
         'phone_auth' => 'boolean',
     ];
+
+    public static function rolesList(): array
+    {
+        return [
+            self::ROLE_USER => 'User',
+            self::ROLE_MODERATOR => 'Moderator',
+            self::ROLE_ADMIN => 'Admin',
+        ];
+    }
 
     public static function register(string $name, string $email, string $password): self
     {
@@ -152,6 +166,11 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isModerator(): bool
+    {
+        return $this->role === self::ROLE_MODERATOR;
     }
 
     public function isPhoneVerified(): bool
