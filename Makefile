@@ -1,10 +1,10 @@
-docker-up:
+docker-up: memory
 	docker-compose up -d
 
 docker-down:
 	docker-compose down
 
-docker-build:
+docker-build: memory
 	docker-compose up --build -d
 
 test:

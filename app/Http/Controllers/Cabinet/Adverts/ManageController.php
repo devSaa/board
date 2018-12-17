@@ -63,7 +63,7 @@ class ManageController extends Controller
     {
         $this->checkAccess($advert);
         try {
-            $this->service->addPhotos($advert->id, $request);
+//            $this->service->addPhotos($advert->id, $request);
         } catch (\DomainException $e) {
             return back()->with('error', $e->getMessage());
         }
