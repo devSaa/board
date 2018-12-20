@@ -69,6 +69,11 @@
             </div>
         </div>
     </nav>
+    <div class="container py-3">
+        @section('search')
+            @include('layouts.partials.search', ['category' => null, 'route' => route('adverts.index')])
+        @show
+    </div>
 
     <div class="container py-3">
         @section('breadcrumbs', Breadcrumbs::render())
