@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands\Search;
 
-use Elasticsearch\Client;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Illuminate\Console\Command;
+use Elasticsearch\Client;
 
 class InitCommand extends Command
 {
@@ -19,14 +19,21 @@ class InitCommand extends Command
 
     public function handle(): bool
     {
+        $this->initAdverts();
+        $this->initBanners();
+        return true;
+    }
+
+    private function initAdverts(): void
+    {
         try {
             $this->client->indices()->delete([
-                'index' => 'app'
+                'index' => 'adverts'
             ]);
         } catch (Missing404Exception $e) {
         }
         $this->client->indices()->create([
-            'index' => 'app',
+            'index' => 'adverts',
             'body' => [
                 'mappings' => [
                     'advert' => [
@@ -121,6 +128,44 @@ class InitCommand extends Command
                 ],
             ],
         ]);
-        return true;
+    }
+
+    private function initBanners(): void
+    {
+        try {
+            $this->client->indices()->delete([
+                'index' => 'banners'
+            ]);
+        } catch (Missing404Exception $e) {
+        }
+        $this->client->indices()->create([
+            'index' => 'banners',
+            'body' => [
+                'mappings' => [
+                    'banner' => [
+                        '_source' => [
+                            'enabled' => true,
+                        ],
+                        'properties' => [
+                            'id' => [
+                                'type' => 'integer',
+                            ],
+                            'status' => [
+                                'type' => 'keyword',
+                            ],
+                            'format' => [
+                                'type' => 'keyword',
+                            ],
+                            'categories' => [
+                                'type' => 'integer',
+                            ],
+                            'regions' => [
+                                'type' => 'integer',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ]);
     }
 }

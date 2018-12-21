@@ -139,6 +139,11 @@ return [
             'url'         => 'admin/adverts/adverts',
             'icon'        => 'bars'
         ],
+        [
+            'text'        => 'Banner',
+            'url'         => 'admin/banners',
+            'icon'        => 'bars'
+        ],
         'ACCOUNT SETTINGS',
         [
             'text' => 'Profile',
