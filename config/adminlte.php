@@ -149,6 +149,11 @@ return [
             'url'         => 'admin/pages',
             'icon'        => 'file'
         ],
+        [
+            'text'        => 'Tickets',
+            'url'         => 'admin/tickets',
+            'icon'        => 'bars'
+        ],
         'ACCOUNT SETTINGS',
         [
             'text' => 'Profile',
