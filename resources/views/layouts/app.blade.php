@@ -89,6 +89,16 @@
 
     <footer>
         <div class="container">
+            <div>
+                <ul class="navbar-nav mr-auto">
+                    @foreach ($menuPages as $page)
+                        <li>
+                            <a class="nav-link"
+                               href="{{ route('page', page_path($page)) }}">{{ $page->getMenuTitle() }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
             <div class="border-top pt-3">
                 <p>{{ date("Y") }} - board</p>
             </div>
