@@ -2,3 +2,7 @@
 .display-inline-block form {
     display: inline-block;
 }
+
+.cke_dialog_tabs a {
+    display: inline-block !important;
+}

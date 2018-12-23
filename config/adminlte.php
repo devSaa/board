@@ -144,6 +144,11 @@ return [
             'url'         => 'admin/banners',
             'icon'        => 'bars'
         ],
+        [
+            'text'        => 'Pages',
+            'url'         => 'admin/pages',
+            'icon'        => 'file'
+        ],
         'ACCOUNT SETTINGS',
         [
             'text' => 'Profile',
